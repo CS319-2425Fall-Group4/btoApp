@@ -18,42 +18,76 @@ The main goal of this system is to support data-driven decision-making by tracki
 # Features
 Role-based access to information via user-authentication.
 Dashboard with role-based access for metrics collected on high schools.
-### Managing forms : 
+### Managing forms :
+
 Listing schools according to their priorities.
+
 Schools will be able to choose themselves from the list (This data will be collected for future analysis). Only the coordinator will have access to this data.
+
 Preventing duplicate forms.
+
 Keeps track of date/time and number of people.
+
 ### Schedules:
+
 Advisor gets notification of the tour request and confirms their participation.
 
 Keeps track of all tours: Completed, Canceled and Upcoming.
-	◦	Makes sure that there are no multiple applications from the same school.
-	◦	Automatic confirmation email will be sent to schools whose tour request is accepted.
-	◦	Tour is added to the schedule at least two weeks prior to the tour date.
-	◦	Algorithm will make sure that if a tour has more than 60 participants, then an additional advisor is added.
-	◦	Tours table may keep track of guide work hours and refresh monthly to facilitate payroll processing.
-	•	Individual Tours:
-	◦	Form for individual tours.
-	◦	Information such as student’s school, personal details and major of interest.
-	◦	Advisors will have access to the information and will be able to assign an appropriate guide to the individual tour.
-	•	Guides:
-	◦	Info of all active guides can be seen.
-	◦	Tours, fairs, timesheet, etc.
-	◦	Coordinator also has add/removal access.
-	•	Fair:
-	◦	Application page for fairs
-	◦	A priority list for fairs that have possibility for prospecting student
-	•	Other Features:
-	◦	Auto-scoring for schools.
-	◦	Priority calculation will be done according to YKS score & Bilkent Loyalty assessment.
-	◦	Selecting multiple time slots.
-	◦	Keep an updated list of counselors.
-	◦	Keep a list of students, who came to the tours.
-	◦	Updated time-sheet, that allows guides to log their work.
 
-Team
-Melih Rıza Yıldız - 21902958
-Alper Yıldırım - 22102033
-Arda Kırcı - 22002031
+Makes sure that there are no multiple applications from the same school.
+
+Automatic confirmation email will be sent to schools whose tour request is accepted.
+
+Tour is added to the schedule at least two weeks prior to the tour date.
+
+Algorithm will make sure that if a tour has more than 60 participants, then an additional advisor is added.
+
+Tours table may keep track of guide work hours and refresh monthly to facilitate payroll processing.
+
+### Individual Tours:
+
+Form for individual tours.
+
+Information such as student’s school, personal details and major of interest.
+
+Advisors will have access to the information and will be able to assign an appropriate guide to the individual tour.
+
+### Guides:
+
+Info of all active guides can be seen.
+
+Tours, fairs, timesheet, etc.
+
+Coordinator also has add/removal access.
+
+Fair:
+
+Application page for fairs
+
+A priority list for fairs that have possibility for prospecting student
+
+### Other Features:
+
+Auto-scoring for schools.
+
+Priority calculation will be done according to YKS score & Bilkent Loyalty assessment.
+
+Selecting multiple time slots.
+
+Keep an updated list of counselors.
+
+Keep a list of students, who came to the tours.
+
+Updated time-sheet, that allows guides to log their work.
+
+## 👥 Team members:
+
 Berin Su İyici - 22102342
+
+Arda Kırcı - 22002031
+
 Ali Sher Mir - 22201310
+
+Alper Yıldırım - 22102033
+
+Melih Rıza Yıldız - 21902958
