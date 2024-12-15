@@ -1,10 +1,6 @@
-To run the project use the following commands in order
-First give authorisation:
-    chmod +x build-and-run.sh
-Then run with:
-    ./build-and-run.sh
+To run the project use the following command: docker-compose up --build
+To finish execution: Press Ctrl+C OR use Docker Hub
+For a fresh start: docker-compose down
 
--- This builds an empty website with the inital file structure and creates the database
-
-migrations for db or ORM (likely sequelize) just to be safe?
+-- This version builds an empty website with the inital file structure and creates the database
 
