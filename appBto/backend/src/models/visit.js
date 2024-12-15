@@ -1,30 +1,41 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Visit = require('./visit');
+const Visitor = require('./visitor');
+const School = require('./school');
 
-const TimeSlot = sequelize.define('TimeSlot', {
+const Visit = sequelize.define('Visit', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  visit_id: {
+  visitor_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Visit,
+      model: Visitor,
       key: 'id',
     },
     onDelete: 'CASCADE',
   },
-  slot_time: {
-    type: DataTypes.TIME,
+  school_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: School,
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  visit_date: {
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
 }, {
-  tableName: 'timeSlot',
+  tableName: 'visit',
 });
 
-TimeSlot.belongsTo(Visit, { foreignKey: 'visit_id', onDelete: 'CASCADE' });
+Visit.belongsTo(Visitor, { foreignKey: 'visitor_id', onDelete: 'CASCADE' });
+Visit.belongsTo(School, { foreignKey: 'school_id', onDelete: 'CASCADE' });
 
-module.exports = TimeSlot;
+module.exports = Visit;
