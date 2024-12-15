@@ -1,0 +1,17 @@
+{
+
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "Backend for the appBto project",
+    "main": "server.js",
+    "scripts": {
+    "start": "node src/server.js"
+    },
+    "dependencies": {
+    "express": "^4.18.2",
+    "sequelize": "^6.32.1",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
+    "dotenv": "^16.0.3"
+    }
+}
