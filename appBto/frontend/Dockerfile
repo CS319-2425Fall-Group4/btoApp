@@ -31,4 +31,4 @@ RUN npm install -g serve
 EXPOSE 3000
 
 # Serve the React build folder in production
-CMD ["serve", "-s", "build"]
+CMD ["serve", "-s", "build", "--single"]
