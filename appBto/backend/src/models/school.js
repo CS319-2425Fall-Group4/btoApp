@@ -12,6 +12,14 @@ const School = sequelize.define('School', {
     allowNull: false,
     unique: true,
   },
+  city: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
+  priority: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 }, {
   tableName: 'school',
 });

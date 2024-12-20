@@ -4,6 +4,10 @@ require("dotenv").config(); // Load environment variables
 const sequelize = require("./config/database");
 const schoolRoutes = require("./routes/schoolRoutes");
 const { School, Visitor, Student, Visit, TimeSlot } = require("./models"); // Import models and relationships
+const visitorRoutes = require('./routes/visitorRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const tourApplicationRoutes = require('./routes/tourApplicationRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
 
 const app = express();
 
@@ -13,6 +17,10 @@ app.use(express.json()); // Parse JSON requests
 
 // Routes
 app.use("/api/school", schoolRoutes);
+app.use('/api/visitors', visitorRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/tour-applications', tourApplicationRoutes);
+app.use('/api/schedules', scheduleRoutes);
 
 // Health Check Route
 app.get("/", (req, res) => {

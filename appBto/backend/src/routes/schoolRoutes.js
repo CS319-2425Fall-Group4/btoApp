@@ -1,15 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const School = require("../models/school");
+const schoolController = require('../controllers/schoolController');
 
-router.get("/", async (req, res) => {
-  const school = await School.findAll();
-  res.json(school);
-});
+// Get all schools
+router.get("/", schoolController.getAllSchools);
 
-router.post("/", async (req, res) => {
-  const school = await School.create(req.body);
-  res.json(school);
-});
+// Create new school
+router.post("/", schoolController.createSchool);
+
+// Update school info
+router.put("/:id/info", schoolController.updateSchoolInfo);
+
+// Update school priority
+router.put("/:id/priority", schoolController.updateSchoolPriority);
+
+// Get school analytics
+router.get("/:id/analytics", schoolController.getSchoolAnalytics);
+
+// Manage school feedback
+router.post("/:id/feedback", schoolController.manageSchoolFeedback);
 
 module.exports = router;
