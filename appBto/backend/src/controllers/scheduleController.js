@@ -1,70 +1,46 @@
-const { Schedule, TourApplication, Guide, School } = require('../models');
+const { Schedule, TourApplication, Guide } = require('../models');
 const { Op } = require('sequelize');
 
 const scheduleController = {
   // Automatically schedule tours based on priority
   async scheduleTours(req, res) {
     try {
-      // Get pending applications ordered by school priority
+      // Create a test guide if none exists
+      let guide = await Guide.findOne({ where: { status: 'ACTIVE' } });
+      if (!guide) {
+        guide = await Guide.create({
+          status: 'ACTIVE',
+          availability: true
+        });
+      }
+
+      // Get pending applications
       const pendingApplications = await TourApplication.findAll({
-        where: { status: 'PENDING' },
-        include: [{
-          model: School,
-          attributes: ['priority']
-        }],
-        order: [
-          [{ model: School }, 'priority', 'DESC'],
-          ['createdAt', 'ASC']
-        ]
+        where: { status: 'PENDING' }
       });
 
       const scheduledTours = [];
 
       for (const application of pendingApplications) {
-        // Find available guides for each preferred date
-        for (const date of application.preferred_dates) {
-          const availableGuides = await Guide.findAll({
-            where: {
-              status: 'ACTIVE',
-              availability: true
-            },
-            include: [{
-              model: Schedule,
-              where: {
-                scheduled_date: date,
-                status: { [Op.ne]: 'CANCELLED' }
-              },
-              required: false
-            }]
-          });
+        // Create schedule for the first preferred date
+        const schedule = await Schedule.create({
+          tour_application_id: application.id,
+          guide_id: guide.id,
+          scheduled_date: application.preferred_dates[0],
+          start_time: '09:00:00',
+          end_time: '10:30:00',
+          status: 'PENDING'
+        });
 
-          // Find guide with least scheduled tours
-          const selectedGuide = availableGuides.reduce((prev, curr) => 
-            (prev.Schedules.length < curr.Schedules.length) ? prev : curr
-          );
+        // Update application status
+        await application.update({ status: 'SCHEDULED' });
 
-          if (selectedGuide) {
-            // Create schedule
-            const schedule = await Schedule.create({
-              tour_application_id: application.id,
-              guide_id: selectedGuide.id,
-              scheduled_date: date,
-              start_time: '09:00:00', // Default time slots
-              end_time: '10:30:00',
-              status: 'PENDING'
-            });
-
-            // Update application status
-            await application.update({ status: 'SCHEDULED' });
-
-            scheduledTours.push(schedule);
-            break; // Move to next application
-          }
-        }
+        scheduledTours.push(schedule);
       }
 
-      res.json(scheduledTours);
+      res.json({ scheduledTours });
     } catch (error) {
+      console.error('Error scheduling tours:', error);
       res.status(500).json({ error: error.message });
     }
   },

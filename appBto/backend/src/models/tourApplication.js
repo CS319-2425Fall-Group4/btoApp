@@ -36,4 +36,6 @@ const TourApplication = sequelize.define('TourApplication', {
   }
 }, {
   tableName: 'tour_application'
-}); 
+});
+
+module.exports = { TourApplication }; 

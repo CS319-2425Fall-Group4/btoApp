@@ -1,20 +1,20 @@
-const { TourApplication, Visitor, School, TimeSlot } = require('../models');
-const { generateConfirmationCode } = require('../utils/helpers'); // We'll create this
+const { TourApplication, Visitor, School } = require('../models');
+const { generateConfirmationCode } = require('../utils/helpers');
 
 const tourApplicationController = {
   // Create new tour application
   async createApplication(req, res) {
     try {
       const { 
-        visitor_id, 
-        school_id, 
+        applicant_id, 
+        institution_id, 
         preferred_dates,
-        type // 'INDIVIDUAL' or 'INSTITUTION'
+        type 
       } = req.body;
 
-      // Validate dates
-      if (!preferred_dates || preferred_dates.length === 0) {
-        return res.status(400).json({ message: 'At least one preferred date is required' });
+      // Validate required fields
+      if (!applicant_id || !preferred_dates || preferred_dates.length === 0) {
+        return res.status(400).json({ message: 'Missing required fields' });
       }
 
       // For institutions, require 3 dates
@@ -26,15 +26,16 @@ const tourApplicationController = {
       const confirmation_code = generateConfirmationCode();
 
       const application = await TourApplication.create({
-        applicant_id: visitor_id,
-        institution_id: school_id,
+        applicant_id,
+        institution_id,
         confirmation_code,
-        preferred_dates,
+        preferred_dates: preferred_dates.map(date => new Date(date)),
         status: 'PENDING'
       });
 
       res.status(201).json(application);
     } catch (error) {
+      console.error('Error creating tour application:', error);
       res.status(400).json({ error: error.message });
     }
   },

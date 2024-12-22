@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
 const Guide = sequelize.define('Guide', {
   id: {
     type: DataTypes.INTEGER,
@@ -6,8 +9,22 @@ const Guide = sequelize.define('Guide', {
   },
   user_id: {
     type: DataTypes.INTEGER,
-    references: { model: 'User', key: 'id' }
+    references: { 
+      model: 'User', 
+      key: 'id' 
+    }
   },
-  availability: DataTypes.BOOLEAN,
-  status: DataTypes.ENUM('TRAINEE', 'ACTIVE', 'INACTIVE')
-}); 
+  availability: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  status: {
+    type: DataTypes.ENUM('TRAINEE', 'ACTIVE', 'INACTIVE'),
+    defaultValue: 'TRAINEE'
+  }
+}, {
+  tableName: 'guide',
+  timestamps: true
+});
+
+module.exports = Guide; 

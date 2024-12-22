@@ -45,4 +45,6 @@ const Schedule = sequelize.define('Schedule', {
   }
 }, {
   tableName: 'schedule'
-}); 
+});
+
+module.exports = Schedule; 

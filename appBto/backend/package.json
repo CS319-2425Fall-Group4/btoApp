@@ -5,7 +5,9 @@
     "description": "Backend for the appBto project",
     "main": "server.js",
     "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test:watch": "NODE_ENV=test jest --watch"
     },
     "dependencies": {
     "express": "^4.18.2",
@@ -14,5 +16,17 @@
     "pg-hstore": "^2.3.4",
     "dotenv": "^16.0.3",
     "cors": "^2.8.5"
+    },
+    "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0"
+    },
+    "jest": {
+    "testEnvironment": "node",
+    "setupFiles": ["<rootDir>/tests/setup.js"],
+    "testPathIgnorePatterns": [
+        "/node_modules/",
+        "/src/config/"
+    ]
     }
 }
