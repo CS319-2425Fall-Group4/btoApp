@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CorporatePage = () => {
+  const navigate = useNavigate();
+
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "70px" }}>
       <div style={blockStyle}>
@@ -19,7 +22,7 @@ const CorporatePage = () => {
 };
 
 const buttonStyle = {
-  margin: "20px 0", // Adjusted margin to create vertical spacing
+  margin: "20px 0",
   padding: "15px 30px",
   backgroundColor: "black",
   color: "white",
