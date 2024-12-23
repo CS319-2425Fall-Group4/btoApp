@@ -29,6 +29,4 @@ const Student = sequelize.define('Student', {
   tableName: 'student',
 });
 
-Student.belongsTo(Visitor, { foreignKey: 'visitor_id', onDelete: 'CASCADE' });
-
 module.exports = Student;

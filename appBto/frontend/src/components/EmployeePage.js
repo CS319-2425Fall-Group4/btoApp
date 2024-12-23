@@ -1,10 +1,13 @@
 import React from "react";
+import Calendar from './Calendar';
 
 const EmployeePage = () => {
+  const userRole = 'GUIDE'; // Replace with dynamic role from user context or state
+
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Employee Page</h1>
-      <p>Welcome to the Employee Page!</p>
+    <div>
+      <h1>Employee Dashboard</h1>
+      <Calendar role={userRole} />
     </div>
   );
 };

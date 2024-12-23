@@ -35,7 +35,4 @@ const Visit = sequelize.define('Visit', {
   tableName: 'visit',
 });
 
-Visit.belongsTo(Visitor, { foreignKey: 'visitor_id', onDelete: 'CASCADE' });
-Visit.belongsTo(School, { foreignKey: 'school_id', onDelete: 'CASCADE' });
-
 module.exports = Visit;

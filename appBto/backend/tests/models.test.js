@@ -45,8 +45,8 @@ describe('Model Relationships', () => {
     const foundApplication = await TourApplication.findOne({
       where: { id: application.id },
       include: [
-        { model: Visitor, as: 'applicant' },
-        { model: School, as: 'institution' }
+        { model: Visitor, as: 'applicantVisitor-test' },
+        { model: School, as: 'institution-test' }
       ]
     });
 

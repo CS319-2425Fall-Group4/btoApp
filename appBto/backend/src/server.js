@@ -8,6 +8,8 @@ const visitorRoutes = require('./routes/visitorRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const tourApplicationRoutes = require('./routes/tourApplicationRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
+
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use('/api/visitors', visitorRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/tour-applications', tourApplicationRoutes);
 app.use('/api/schedules', scheduleRoutes);
+app.use('/api/calendar', calendarRoutes);
 
 // Health Check Route
 app.get("/", (req, res) => {

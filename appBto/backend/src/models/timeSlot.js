@@ -25,6 +25,4 @@ const TimeSlot = sequelize.define('TimeSlot', {
   tableName: 'timeSlot', // Explicitly define the table name
 });
 
-TimeSlot.belongsTo(Visit, { foreignKey: 'visit_id', onDelete: 'CASCADE' });
-
 module.exports = TimeSlot;
