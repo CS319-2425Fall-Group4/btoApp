@@ -27,6 +27,7 @@ api.interceptors.response.use(
   }
 );
 
+
 // School API
 export const schoolAPI = {
   getAll: (page = 1, limit = 10) => api.get('/school', { params: { page, limit } }),

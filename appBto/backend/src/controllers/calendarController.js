@@ -44,8 +44,13 @@ const calendarController = {
             model: Guide },
         { 
             model: TourApplication, 
-            include: [{ model: Visitor }, //alias is centralised in models/index.js
-            { model: School }, //alias is centralised in models/index.js
+            include: [{
+              model: Visitor,
+              as: 'applicant'
+            }, 
+            { model: School,
+              as: 'institution'
+            }, 
         
             ],
           },
