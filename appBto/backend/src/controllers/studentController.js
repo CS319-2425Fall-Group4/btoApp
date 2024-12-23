@@ -14,8 +14,9 @@ const studentController = {
   // Get all students
   async getAllStudents(req, res) {
     try {
-      const students = await Student.findAll({
-        include: [Visitor]
+      const students = await Student.findAll({ 
+          model: Visitor,
+          as: 'applicant'
       });
       res.json(students);
     } catch (error) {
@@ -27,7 +28,8 @@ const studentController = {
   async getStudentById(req, res) {
     try {
       const student = await Student.findByPk(req.params.id, {
-        include: [Visitor]
+          model: Visitor,
+          as: 'applicant'
       });
       if (!student) {
         return res.status(404).json({ message: 'Student not found' });

@@ -57,8 +57,8 @@ const tourApplicationController = {
       const application = await TourApplication.findOne({
         where: { confirmation_code: code },
         include: [
-          { model: Visitor },
-          { model: School }
+          { model: Visitor, as: 'applicant' },
+          { model: School, as: 'institution' }
         ]
       });
 
@@ -155,8 +155,8 @@ const tourApplicationController = {
       const applications = await TourApplication.findAll({
         where,
         include: [
-          { model: Visitor },
-          { model: School }
+          { model: Visitor, as: 'applicant' },
+          { model: School, as: 'institution' }
         ],
         order: [['createdAt', 'DESC']]
       });

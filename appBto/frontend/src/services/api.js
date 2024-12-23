@@ -27,6 +27,7 @@ api.interceptors.response.use(
   }
 );
 
+
 // Add this to your existing api.js
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -35,6 +36,7 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
 
 // School API
 export const schoolAPI = {
