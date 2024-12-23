@@ -4,4 +4,3 @@ For a fresh start: docker-compose down
 
 -- This version builds an empty website with the inital file structure and creates the database
 
-
