@@ -48,4 +48,4 @@ const TourApplication = sequelize.define('TourApplication', {
   timestamps: true
 });
 
-module.exports = { TourApplication }; 
+module.exports =  TourApplication; 
