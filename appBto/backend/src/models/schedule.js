@@ -38,13 +38,10 @@ const Schedule = sequelize.define('Schedule', {
   status: {
     type: DataTypes.ENUM('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED'),
     defaultValue: 'PENDING'
-  },
-  advisor_approval: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
   }
 }, {
-  tableName: 'schedule'
+  tableName: 'schedule',
+  timestamps: true
 });
 
 module.exports = Schedule; 

@@ -1,40 +1,56 @@
-const { Schedule, TourApplication, Guide } = require('../models');
+const { Schedule, TourApplication, Guide, School } = require('../models');
 const { Op } = require('sequelize');
 
 const scheduleController = {
   // Automatically schedule tours based on priority
   async scheduleTours(req, res) {
     try {
-      // Create a test guide if none exists
-      let guide = await Guide.findOne({ where: { status: 'ACTIVE' } });
-      if (!guide) {
-        guide = await Guide.create({
+      // Get active guides
+      const guides = await Guide.findAll({
+        where: { 
           status: 'ACTIVE',
           availability: true
-        });
+        }
+      });
+
+      if (!guides.length) {
+        return res.status(400).json({ message: 'No available guides' });
       }
 
-      // Get pending applications
+      // Get pending applications ordered by school priority
       const pendingApplications = await TourApplication.findAll({
-        where: { status: 'PENDING' }
+        where: { status: 'PENDING' },
+        include: [{
+          model: School,
+          as: 'institution'
+        }],
+        order: [[{ model: School, as: 'institution' }, 'priority', 'ASC']]
       });
 
       const scheduledTours = [];
 
       for (const application of pendingApplications) {
-        // Create schedule for the first preferred date
+        // Find available guide
+        const availableGuide = await Guide.findOne({
+          where: { 
+            status: 'ACTIVE',
+            availability: true
+          }
+        });
+
+        if (!availableGuide) continue;
+
+        // Create schedule
         const schedule = await Schedule.create({
           tour_application_id: application.id,
-          guide_id: guide.id,
+          guide_id: availableGuide.id,
           scheduled_date: application.preferred_dates[0],
           start_time: '09:00:00',
           end_time: '10:30:00',
           status: 'PENDING'
         });
 
-        // Update application status
         await application.update({ status: 'SCHEDULED' });
-
         scheduledTours.push(schedule);
       }
 

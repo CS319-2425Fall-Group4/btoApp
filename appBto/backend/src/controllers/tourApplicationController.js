@@ -5,37 +5,46 @@ const tourApplicationController = {
   // Create new tour application
   async createApplication(req, res) {
     try {
-      const { 
-        applicant_id, 
-        institution_id, 
-        preferred_dates,
-        type 
-      } = req.body;
+      const { applicant_id, institution_id, preferred_dates } = req.body;
 
-      // Validate required fields
-      if (!applicant_id || !preferred_dates || preferred_dates.length === 0) {
-        return res.status(400).json({ message: 'Missing required fields' });
+      // Validate dates
+      const validDates = preferred_dates.every(date => {
+        const preferredDate = new Date(date);
+        const today = new Date();
+        return preferredDate > today;
+      });
+
+      if (!validDates) {
+        return res.status(400).json({ 
+          message: 'Preferred dates must be in the future' 
+        });
       }
 
-      // For institutions, require 3 dates
-      if (type === 'INSTITUTION' && preferred_dates.length !== 3) {
-        return res.status(400).json({ message: 'Institutions must provide exactly 3 preferred dates' });
+      // Check for existing pending applications
+      const existingApplication = await TourApplication.findOne({
+        where: {
+          applicant_id,
+          status: 'PENDING'
+        }
+      });
+
+      if (existingApplication) {
+        return res.status(400).json({ 
+          message: 'You already have a pending application' 
+        });
       }
 
-      // Generate unique confirmation code
       const confirmation_code = generateConfirmationCode();
-
       const application = await TourApplication.create({
         applicant_id,
         institution_id,
         confirmation_code,
-        preferred_dates: preferred_dates.map(date => new Date(date)),
+        preferred_dates,
         status: 'PENDING'
       });
 
       res.status(201).json(application);
     } catch (error) {
-      console.error('Error creating tour application:', error);
       res.status(400).json({ error: error.message });
     }
   },

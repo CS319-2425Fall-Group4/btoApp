@@ -65,6 +65,18 @@ CREATE TABLE schedule (
     "updatedAt" TIMESTAMP WITH TIME ZONE
 );
 
+-- Add indexes for frequently queried fields
+CREATE INDEX idx_tour_application_status ON tour_application(status);
+CREATE INDEX idx_guide_status_availability ON guide(status, availability);
+CREATE INDEX idx_schedule_date_status ON schedule(scheduled_date, status);
+
+-- Add composite index for schedule conflicts
+CREATE INDEX idx_schedule_guide_date ON schedule(guide_id, scheduled_date) 
+WHERE status != 'CANCELLED';
+
+-- Add index for school priority
+CREATE INDEX idx_school_priority ON school(priority DESC);
+
 
 
 

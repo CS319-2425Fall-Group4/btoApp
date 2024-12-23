@@ -4,12 +4,12 @@ const { TourApplication } = require('../src/models/tourApplication');
 
 const setupTestDb = async () => {
   try {
-    // Wait for database to be ready
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await sequelize.authenticate();
+    console.log('Test database connected');
     
-    // Sync database with force true to clear all data
+    // Force sync to recreate tables
     await sequelize.sync({ force: true });
-    console.log('Test database synced successfully');
+    console.log('Test database synced');
   } catch (error) {
     console.error('Test database setup failed:', error);
     throw error;

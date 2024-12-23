@@ -1,13 +1,16 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "http://localhost:5001/api";
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
-export const fetchSchools = async () => {
-  const response = await axios.get(`${API_URL}/school`);
-  return response.data;
+export const tourApplicationService = {
+  create: (data) => api.post('/tour-applications', data),
+  getByCode: (code) => api.get(`/tour-applications/code/${code}`),
+  schedule: () => api.post('/schedules/auto-schedule')
 };
 
-export const submitForm = async (formData) => {
-  const response = await axios.post(`${API_URL}/visitor`, formData);
-  return response.data;
-};
+export default api;

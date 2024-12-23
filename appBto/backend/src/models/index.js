@@ -16,6 +16,18 @@ TimeSlot.belongsTo(Visit, { foreignKey: 'visit_id', onDelete: 'CASCADE' });
 TourApplication.belongsTo(Visitor, { foreignKey: 'applicant_id', as: 'applicant' });
 TourApplication.belongsTo(School, { foreignKey: 'institution_id', as: 'institution' });
 
+// Update relationships
+Schedule.belongsTo(TourApplication, { 
+  foreignKey: 'tour_application_id',
+  onDelete: 'CASCADE'
+});
+Schedule.belongsTo(Guide, { 
+  foreignKey: 'guide_id',
+  onDelete: 'CASCADE'
+});
+Guide.hasMany(Schedule, { foreignKey: 'guide_id' });
+TourApplication.hasOne(Schedule, { foreignKey: 'tour_application_id' });
+
 module.exports = {
   School,
   Visitor,
