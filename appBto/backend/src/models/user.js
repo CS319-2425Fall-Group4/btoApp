@@ -1,31 +1,33 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Visitor = require('./user');
 
-const School = sequelize.define('School', {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true
   },
-  name: {
+  name:{
+    type: DataTypes.STRING(255),
+  },
+  email: {
     type: DataTypes.STRING(255),
     allowNull: false,
     unique: true,
+    validate: {
+      isEmail: true,
+    },
   },
-  city: {
+  password: {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
-  priority: {
-    type: DataTypes.INTEGER,
+  role: {
+    type: DataTypes.ENUM('DIRECTOR', 'ADVISOR', 'GUIDE', 'COORDINATOR', 'ADMINISTRATOR'),
     allowNull: false,
-    validate: {
-      min: 1,
-    },
   },
 }, {
-  tableName: 'school',
-});
+  tableName: 'user',
+}); 
 
-module.exports = School;
+module.exports = User;

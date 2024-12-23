@@ -17,6 +17,12 @@ services:
       POSTGRES_DB: pern_db
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
 
   backend:
     build:
@@ -25,12 +31,20 @@ services:
     ports:
       - "5001:5000"
     environment:
+      NODE_ENV: ${NODE_ENV:-development}
       DB_HOST: database
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: pern_db
     depends_on:
-      - database
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
     command: ["bash", "./wait-for-it.sh", "database:5432", "--", "npm", "start"]
 
   frontend:
@@ -41,6 +55,7 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    restart: unless-stopped
 
   scraper:
     build:
@@ -48,6 +63,7 @@ services:
     container_name: scraper
     depends_on:
       - backend
+    restart: unless-stopped
 
 volumes:
   db_data:

@@ -1,0 +1,123 @@
+/* Adjust the form container for better vertical centering on larger screens */
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto; /* Add some vertical space above the form */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ensure text is more readable */
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  /* Form message alignment and color */
+  .form-message {
+    text-align: center;
+    color: green;
+    margin-bottom: 20px;
+  }
+  
+  /* Adjust form group spacing and positioning */
+  .form-group {
+    position: relative;
+    margin-bottom: 25px;
+  }
+  
+  /* Input field design */
+  .form-input {
+    width: 100%;
+    padding: 12px 10px; /* Add padding for better spacing */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Focus state for input fields */
+  .form-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Placeholder handling for older browsers */
+  .form-input::placeholder {
+    color: transparent; /* Hide placeholder when label is used */
+  }
+  
+  /* Floating label behavior */
+  .form-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #aaa;
+    transition: all 0.3s ease;
+    pointer-events: none; /* Prevent interaction */
+  }
+  
+  /* Label adjustments when input is focused or filled */
+  .form-input:focus ~ .form-label,
+  .form-input:not(:placeholder-shown) ~ .form-label,
+  .form-label.focused {
+    top: -10px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  
+  /* Error handling for inputs */
+  .error-message {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .error-input {
+    border-color: #ff0000;
+  }
+  
+  /* Button styling */
+  .form-submit-button {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .form-submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Make the form responsive for smaller screens */
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 15px;
+    }
+  
+    .form-input {
+      font-size: 14px;
+    }
+  
+    .form-label {
+      font-size: 14px;
+    }
+  
+    .form-submit-button {
+      font-size: 14px;
+    }
+  }
+  

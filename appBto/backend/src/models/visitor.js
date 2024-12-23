@@ -17,6 +17,9 @@ const Visitor = sequelize.define('Visitor', {
   phone_number: {
     type: DataTypes.STRING(15),
     allowNull: false,
+    validate: {
+      is: /^\+?[0-9]{7,15}$/,
+    },
   },
 }, {
   tableName: 'visitor',
