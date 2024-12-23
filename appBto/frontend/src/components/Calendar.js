@@ -11,7 +11,16 @@ const Calendar = ({ role }) => {
         const response = await calendarAPI.getSchedules({ role });
         setSchedules(response.data);
       } catch (err) {
-        setError(err.message);
+        if (err.response) {
+          // Server responded with a status other than 2xx
+          setError(`Error: ${err.response.status} - ${err.response.statusText}`);
+        } else if (err.request) {
+          // Request was made, but no response was received
+          setError('Error: No response from the server.');
+        } else {
+          // Something else happened
+          setError(`Error: ${err.message}`);
+        }
       }
     };
 
