@@ -7,27 +7,39 @@ const User = sequelize.define('User', {
     primaryKey: true,
     autoIncrement: true
   },
-  name:{
-    type: DataTypes.STRING(255),
-  },
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: true,
-    },
+      isEmail: true
+    }
   },
   password: {
     type: DataTypes.STRING(255),
-    allowNull: false,
+    allowNull: false
   },
   role: {
-    type: DataTypes.ENUM('DIRECTOR', 'ADVISOR', 'GUIDE', 'COORDINATOR', 'ADMINISTRATOR'),
+    type: DataTypes.STRING(20),
     allowNull: false,
-  },
+    validate: {
+      isIn: [['DIRECTOR', 'ADVISOR', 'GUIDE', 'COORDINATOR', 'ADMINISTRATOR']]
+    }
+  }
 }, {
   tableName: 'user',
-}); 
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  underscored: true,
+  hooks: {
+    beforeCreate: (user) => {
+      console.log('Creating user:', user.toJSON());
+    },
+    afterCreate: (user) => {
+      console.log('Created user:', user.toJSON());
+    }
+  }
+});
 
 module.exports = User;

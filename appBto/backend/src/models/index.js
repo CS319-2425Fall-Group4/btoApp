@@ -6,6 +6,7 @@ const TimeSlot = require('./timeSlot');
 const Guide = require('./guide');
 const Schedule = require('./schedule');
 const TourApplication = require('./tourApplication');
+const User = require('./user');
 
 // Define relationships
 Student.belongsTo(Visitor, { foreignKey: 'visitor_id', onDelete: 'CASCADE' }); 
@@ -27,6 +28,7 @@ Schedule.belongsTo(Guide, { //May need alias on further use
 });
 Guide.hasMany(Schedule, { foreignKey: 'guide_id' });
 TourApplication.hasOne(Schedule, { foreignKey: 'tour_application_id' }); //May need alias on further use
+Guide.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = {
   School,
@@ -36,5 +38,6 @@ module.exports = {
   TimeSlot,
   TourApplication,
   Guide,
-  Schedule
+  Schedule,
+  User
 };
