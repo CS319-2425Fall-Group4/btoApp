@@ -6,8 +6,8 @@ const EmployeePage = () => {
 
   return (
     <div>
-      <h1>Employee Dashboard</h1>
-      <Calendar role={userRole} />
+      <h1>Ana sayfa</h1>
+      <Calendar role="GUIDE"/>
     </div>
   );
 };

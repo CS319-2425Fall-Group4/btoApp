@@ -1,9 +1,11 @@
+// backend/src/routes/calendarRoutes.js
 const express = require('express');
 const router = express.Router();
 const calendarController = require('../controllers/calendarController');
 const { authMiddleware } = require('../middleware/auth');
 
-// Fetch schedules dynamically based on user role and filters
+// GET /api/calendar
+// Returns scheduled tours, possibly filtered by user role, date, or status
 router.get('/', authMiddleware, calendarController.getSchedules);
 
 module.exports = router;

@@ -17,6 +17,7 @@ const calendarController = {
     if (role === 'GUIDE') {
       whereClause.guide_id = id;
       console.log('Guide-specific filtering applied:', whereClause); // Log filter
+    }else if (role === 'ADMIN' || role === 'COORDINATOR') {
     }
 
     // Use Op for date filtering

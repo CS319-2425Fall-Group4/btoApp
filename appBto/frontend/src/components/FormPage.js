@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import '../styles/FormPage.css'; // Import the CSS file for sliding placeholders
+import Calendar from "./Calendar";
 
 const FormPage = () => {
   const [formData, setFormData] = useState({
