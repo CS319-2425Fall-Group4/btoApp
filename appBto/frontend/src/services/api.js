@@ -27,6 +27,15 @@ api.interceptors.response.use(
   }
 );
 
+// Add this to your existing api.js
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // School API
 export const schoolAPI = {
   getAll: (page = 1, limit = 10) => api.get('/school', { params: { page, limit } }),
@@ -74,5 +83,10 @@ export const calendarAPI = {
   getSchedules: (filters) => api.get('/calendar', { params: filters }),
 };
 
+// Add auth-related API calls
+export const authAPI = {
+  login: (credentials) => api.post('/auth/login', credentials),
+  logout: () => api.post('/auth/logout'),
+};
 
 export default api;
