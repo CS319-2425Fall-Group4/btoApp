@@ -1,14 +1,32 @@
+-- Create ENUM types
+DO $$
+BEGIN
+   CREATE TYPE enum_guide_status AS ENUM ('TRAINEE', 'ACTIVE', 'INACTIVE');
+   CREATE TYPE enum_tour_application_status AS ENUM ('PENDING', 'SCHEDULED', 'CANCELLED');
+   CREATE TYPE enum_schedule_status AS ENUM ('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED');
+EXCEPTION
+   WHEN duplicate_object THEN NULL;
+END$$;
+
+CREATE TABLE "user" (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE NOT NULL CHECK (email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$'),
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) CHECK (role IN ('DIRECTOR', 'ADVISOR', 'GUIDE', 'COORDINATOR', 'ADMINISTRATOR'))
+);
+
 CREATE TABLE school (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     city VARCHAR(255) NOT NULL,
-    priority INTEGER NOT NULL
+    priority INTEGER NOT NULL CHECK (priority > 0)
 );
 
 CREATE TABLE visitor (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(15) NOT NULL
+    email VARCHAR(255) NOT NULL CHECK (email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$'),
+    phone_number VARCHAR(15) NOT NULL CHECK (phone_number ~ '^\+?[0-9]{7,15}$')
 );
 
 -- individual student details related to a specific visitor.
@@ -34,11 +52,11 @@ CREATE TABLE timeSlot (
 
 CREATE TABLE guide (
     id SERIAL PRIMARY KEY,
-    user_id INT,
+    user_id INTEGER REFERENCES "user"(id),
     availability BOOLEAN DEFAULT true,
-    status VARCHAR(10) CHECK (status IN ('TRAINEE', 'ACTIVE', 'INACTIVE')) DEFAULT 'TRAINEE',
-    "createdAt" TIMESTAMP WITH TIME ZONE,
-    "updatedAt" TIMESTAMP WITH TIME ZONE
+    status enum_guide_status DEFAULT 'TRAINEE',
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    "updatedAt" TIMESTAMP WITH TIME ZONE  DEFAULT NOW()
 );
 
 CREATE TABLE tour_application (
@@ -46,10 +64,10 @@ CREATE TABLE tour_application (
     applicant_id INT NOT NULL REFERENCES visitor(id),
     institution_id INT REFERENCES school(id),
     confirmation_code VARCHAR(255) UNIQUE,
-    status VARCHAR(10) CHECK (status IN ('PENDING', 'SCHEDULED', 'CANCELLED')) DEFAULT 'PENDING',
+    status enum_tour_application_status DEFAULT 'PENDING',
     preferred_dates DATE[] NOT NULL,
-    "createdAt" TIMESTAMP WITH TIME ZONE,
-    "updatedAt" TIMESTAMP WITH TIME ZONE
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE schedule (
@@ -59,10 +77,14 @@ CREATE TABLE schedule (
     scheduled_date DATE NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    status VARCHAR(10) CHECK (status IN ('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED')) DEFAULT 'PENDING',
+    status enum_schedule_status DEFAULT 'PENDING',
     advisor_approval BOOLEAN DEFAULT false,
-    "createdAt" TIMESTAMP WITH TIME ZONE,
-    "updatedAt" TIMESTAMP WITH TIME ZONE
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE dene (
+    id SERIAL PRIMARY KEY
 );
 
 -- Add indexes for frequently queried fields
@@ -76,7 +98,6 @@ WHERE status != 'CANCELLED';
 
 -- Add index for school priority
 CREATE INDEX idx_school_priority ON school(priority DESC);
-
 
 
 

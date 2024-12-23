@@ -28,12 +28,21 @@ const TourApplication = sequelize.define('TourApplication', {
   },
   status: {
     type: DataTypes.ENUM('PENDING', 'SCHEDULED', 'CANCELLED'),
-    defaultValue: 'PENDING'
+    defaultValue: 'PENDING',
+    allowNull: false
   },
   preferred_dates: {
     type: DataTypes.ARRAY(DataTypes.DATE),
     allowNull: false
-  }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
   tableName: 'tour_application',
   timestamps: true

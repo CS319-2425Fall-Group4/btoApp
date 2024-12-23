@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Visitor = require('./user');
 
 const School = sequelize.define('School', {
   id: {
@@ -19,6 +20,9 @@ const School = sequelize.define('School', {
   priority: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    validate: {
+      min: 1,
+    },
   },
 }, {
   tableName: 'school',

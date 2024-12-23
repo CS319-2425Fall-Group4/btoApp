@@ -24,7 +24,7 @@ const Schedule = sequelize.define('Schedule', {
     }
   },
   scheduled_date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY, // check if the timestamp is also needed
     allowNull: false
   },
   start_time: {
@@ -38,7 +38,19 @@ const Schedule = sequelize.define('Schedule', {
   status: {
     type: DataTypes.ENUM('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED'),
     defaultValue: 'PENDING'
-  }
+  },
+  advisor_approval: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
   tableName: 'schedule',
   timestamps: true

@@ -10,7 +10,7 @@ const Guide = sequelize.define('Guide', {
   user_id: {
     type: DataTypes.INTEGER,
     references: { 
-      model: 'User', 
+      model: 'user', 
       key: 'id' 
     }
   },
@@ -21,7 +21,15 @@ const Guide = sequelize.define('Guide', {
   status: {
     type: DataTypes.ENUM('TRAINEE', 'ACTIVE', 'INACTIVE'),
     defaultValue: 'TRAINEE'
-  }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
   tableName: 'guide',
   timestamps: true
